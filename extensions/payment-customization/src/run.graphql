@@ -1,0 +1,29 @@
+query RunInput {
+  cart {
+    deliveryGroups {
+      deliveryAddress {
+        countryCode
+      }
+    }
+    cost {
+      totalAmount {
+        amount
+      }
+    }
+    lines {
+      attribute {
+        key
+        value
+      }
+      merchandise {
+        ... on ProductVariant {
+          sku
+        }
+      }
+    }
+  }
+  paymentMethods {
+    id
+    name
+  }
+}

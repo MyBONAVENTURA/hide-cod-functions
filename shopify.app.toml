@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "5hide-cod-functions"
+client_id = "46556642e1e193eb978434acf97292c2"
+application_url = "https://leadership-taxation-im-eagles.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://leadership-taxation-im-eagles.trycloudflare.com/auth/callback",
+  "https://leadership-taxation-im-eagles.trycloudflare.com/auth/shopify/callback",
+  "https://leadership-taxation-im-eagles.trycloudflare.com/api/auth/callback",
+  "https://leadership-taxation-im-eagles.trycloudflare.com/.shopify/graphiql/auth/callback"
+]
+
+[webhooks]
+api_version = "2023-10"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "chekout-ui-extentions.myshopify.com"
