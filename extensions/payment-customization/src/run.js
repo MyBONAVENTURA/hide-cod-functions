@@ -42,7 +42,7 @@ export function run(input) {
     }
   );
 
-  // Check if any line item's SKU contains 'カスタム'
+  // Check if any line item's SKU contains 'custom'
   const containsCustomSKU = input.cart.lines.some((lineItem) => {
     return (
       // @ts-ignore
@@ -51,8 +51,45 @@ export function run(input) {
     );
   });
 
+  const containsPreorder = input.cart.lines.some((lineItem) => {
+    return (
+      // @ts-ignore
+
+      lineItem.merchandise.metafield &&
+      // @ts-ignore
+      lineItem.merchandise.metafield.value.includes("/")
+    );
+  });
+
+  const containsPersonalize = input.cart.lines.some((lineItem) => {
+    return (
+      // @ts-ignore
+
+      lineItem.merchandise &&
+      // @ts-ignore
+      lineItem.merchandise.product.title.includes("パーソナライズ")
+    );
+  });
+
+  const containsGiftcard = input.cart.lines.some((lineItem) => {
+    return (
+      lineItem.merchandise &&
+      // @ts-ignore
+      lineItem.merchandise.product &&
+      // @ts-ignore
+      lineItem.merchandise.product.isGiftCard === true
+    );
+  });
+
   // Check if any of the conditions is true
-  if (!isGiftPurchase && !isRestrictedCountry && !containsCustomSKU) {
+  if (
+    !isGiftPurchase &&
+    !isRestrictedCountry &&
+    !containsCustomSKU &&
+    !containsPreorder &&
+    !containsPersonalize &&
+    !containsGiftcard
+  ) {
     console.error("No line item meets the criteria for hiding COD.");
     return NO_CHANGES;
   }

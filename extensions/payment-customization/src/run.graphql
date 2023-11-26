@@ -18,6 +18,15 @@ query RunInput {
       merchandise {
         ... on ProductVariant {
           sku
+          product {
+            handle
+            isGiftCard
+            title
+          }
+          title
+          metafield(key: "preorder", namespace: "global") {
+            value
+          }
         }
       }
     }
