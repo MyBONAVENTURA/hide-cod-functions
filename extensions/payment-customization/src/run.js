@@ -96,7 +96,7 @@ export function run(input) {
 
   // Find the payment method to hide
   const hidePaymentMethod = input.paymentMethods.find((method) =>
-    method.name.includes("Cash on Delivery")
+    method.name.includes("代金引換")
   );
 
   if (!hidePaymentMethod) {
