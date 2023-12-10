@@ -30,24 +30,24 @@ export function run(input) {
   });
 
   // Check if the shipping address in any delivery group is in one of the restricted countries
-  const restrictedCountries = ["US", "KR", "TH", "HK", "TW", "SG"];
-  const isRestrictedCountry = input.cart.deliveryGroups.some(
-    (deliveryGroup) => {
-      const deliveryAddress = deliveryGroup.deliveryAddress;
-      return (
-        deliveryAddress &&
-        deliveryAddress.countryCode &&
-        restrictedCountries.includes(deliveryAddress.countryCode)
-      );
-    }
-  );
+  // const restrictedCountries = ["US", "KR", "TH", "HK", "TW", "SG"];
+  // const isRestrictedCountry = input.cart.deliveryGroups.some(
+  //   (deliveryGroup) => {
+  //     const deliveryAddress = deliveryGroup.deliveryAddress;
+  //     return (
+  //       deliveryAddress &&
+  //       deliveryAddress.countryCode &&
+  //       restrictedCountries.includes(deliveryAddress.countryCode)
+  //     );
+  //   }
+  // );
 
   // Check if any line item's SKU contains 'custom'
   const containsCustomSKU = input.cart.lines.some((lineItem) => {
     return (
       // @ts-ignore
 
-      lineItem.merchandise && lineItem.merchandise.sku.includes("custom")
+      lineItem.merchandise && lineItem.merchandise.sku.includes("-custom")
     );
   });
 
@@ -84,7 +84,6 @@ export function run(input) {
   // Check if any of the conditions is true
   if (
     !isGiftPurchase &&
-    !isRestrictedCountry &&
     !containsCustomSKU &&
     !containsPreorder &&
     !containsPersonalize &&
@@ -95,8 +94,8 @@ export function run(input) {
   }
 
   // Find the payment method to hide
-  const hidePaymentMethod = input.paymentMethods.find((method) =>
-    method.name.includes("代金引換")
+  const hidePaymentMethod = input.paymentMethods.find(
+    (method) => method.name.includes("代金引換") || method.name.includes("COD")
   );
 
   if (!hidePaymentMethod) {

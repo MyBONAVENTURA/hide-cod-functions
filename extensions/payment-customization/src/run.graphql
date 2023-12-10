@@ -10,8 +10,12 @@ query RunInput {
         amount
       }
     }
+    deliverableLines {
+      id
+      quantity
+    }
     lines {
-      attribute {
+      attribute(key: "ギフト購入") {
         key
         value
       }
