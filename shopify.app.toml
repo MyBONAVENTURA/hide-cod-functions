@@ -2,7 +2,7 @@
 
 name = "5hide-cod-functions"
 client_id = "46556642e1e193eb978434acf97292c2"
-application_url = "https://extends-blocked-discusses-floating.trycloudflare.com"
+application_url = "https://wrapping-portraits-scanners-expanding.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,10 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://extends-blocked-discusses-floating.trycloudflare.com/auth/callback",
-  "https://extends-blocked-discusses-floating.trycloudflare.com/auth/shopify/callback",
-  "https://extends-blocked-discusses-floating.trycloudflare.com/api/auth/callback",
-  "https://extends-blocked-discusses-floating.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://wrapping-portraits-scanners-expanding.trycloudflare.com/auth/callback",
+  "https://wrapping-portraits-scanners-expanding.trycloudflare.com/auth/shopify/callback",
+  "https://wrapping-portraits-scanners-expanding.trycloudflare.com/api/auth/callback",
+  "https://wrapping-portraits-scanners-expanding.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]

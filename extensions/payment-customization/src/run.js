@@ -19,6 +19,9 @@ const NO_CHANGES = {
  * @returns {FunctionRunResult}
  */
 export function run(input) {
+  // // @ts-ignore
+  // const urlContainsDo = input.context.url.includes("/do/");
+  // console.log(urlContainsDo);
   // Check if any line item is marked as a gift purchase
   const isGiftPurchase = input.cart.lines.some((lineItem) => {
     // Check if attribute is not null and has the key 'ギフト購入' with value '有効'
@@ -28,19 +31,6 @@ export function run(input) {
       lineItem.attribute.value === "有効"
     );
   });
-
-  // Check if the shipping address in any delivery group is in one of the restricted countries
-  // const restrictedCountries = ["US", "KR", "TH", "HK", "TW", "SG"];
-  // const isRestrictedCountry = input.cart.deliveryGroups.some(
-  //   (deliveryGroup) => {
-  //     const deliveryAddress = deliveryGroup.deliveryAddress;
-  //     return (
-  //       deliveryAddress &&
-  //       deliveryAddress.countryCode &&
-  //       restrictedCountries.includes(deliveryAddress.countryCode)
-  //     );
-  //   }
-  // );
 
   // Check if any line item's SKU contains 'custom'
   const containsCustomSKU = input.cart.lines.some((lineItem) => {
@@ -95,22 +85,44 @@ export function run(input) {
 
   // Find the payment method to hide
   const hidePaymentMethod = input.paymentMethods.find(
-    (method) => method.name.includes("代金引換") || method.name.includes("COD")
+    (method) => method.name.includes("代金引換") || method.name.includes("cod")
   );
 
-  if (!hidePaymentMethod) {
+  const amazonPayMethod = input.paymentMethods.find((method) =>
+    method.name.toLowerCase().includes("amazon")
+  );
+
+  const operations = [];
+  if (amazonPayMethod) {
+    operations.push({
+      hide: {
+        paymentMethodId: amazonPayMethod.id,
+      },
+    });
+  }
+
+  // Add COD to operations if the conditions are met and it exists
+  if (
+    hidePaymentMethod &&
+    (isGiftPurchase ||
+      containsCustomSKU ||
+      containsPreorder ||
+      containsPersonalize ||
+      containsGiftcard)
+  ) {
+    operations.push({
+      hide: {
+        paymentMethodId: hidePaymentMethod.id,
+      },
+    });
+  }
+
+  // If no operations, return NO_CHANGES
+  if (operations.length === 0) {
     return NO_CHANGES;
   }
 
-  return {
-    operations: [
-      {
-        hide: {
-          paymentMethodId: hidePaymentMethod.id,
-        },
-      },
-    ],
-  };
+  return { operations };
 }
 
 // // @ts-check

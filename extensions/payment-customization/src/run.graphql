@@ -1,18 +1,9 @@
 query RunInput {
   cart {
-    deliveryGroups {
-      deliveryAddress {
-        countryCode
-      }
-    }
     cost {
       totalAmount {
         amount
       }
-    }
-    deliverableLines {
-      id
-      quantity
     }
     lines {
       attribute(key: "ギフト購入") {
