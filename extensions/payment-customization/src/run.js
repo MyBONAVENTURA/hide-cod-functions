@@ -83,7 +83,7 @@ export function run(input) {
     return NO_CHANGES;
   }
 
-  // Find the payment method to hide
+  // Find the payment method to hides                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .
   const hidePaymentMethod = input.paymentMethods.find(
     (method) => method.name.includes("代金引換") || method.name.includes("cod")
   );
