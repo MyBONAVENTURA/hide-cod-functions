@@ -93,13 +93,13 @@ export function run(input) {
   );
 
   const operations = [];
-  if (amazonPayMethod) {
-    operations.push({
-      hide: {
-        paymentMethodId: amazonPayMethod.id,
-      },
-    });
-  }
+  // if (amazonPayMethod) {
+  //   operations.push({
+  //     hide: {
+  //       paymentMethodId: amazonPayMethod.id,
+  //     },
+  //   });
+  // }
 
   // Add COD to operations if the conditions are met and it exists
   if (
