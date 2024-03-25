@@ -71,13 +71,22 @@ export function run(input) {
     );
   });
 
+  console.log("containsPersonalize", containsPersonalize);
+
+  const cartTotal = parseFloat(input.cart.cost.totalAmount.amount ?? "0.0");
+  console.log("トータル", cartTotal);
+
+  const isExeededSubtotal = cartTotal >= 500000;
+  console.log("isExeededSubtotal", isExeededSubtotal);
+
   // Check if any of the conditions is true
   if (
     !isGiftPurchase &&
     !containsCustomSKU &&
     !containsPreorder &&
     !containsPersonalize &&
-    !containsGiftcard
+    !containsGiftcard &&
+    !isExeededSubtotal
   ) {
     console.error("No line item meets the criteria for hiding COD.");
     return NO_CHANGES;
@@ -85,7 +94,7 @@ export function run(input) {
 
   // Find the payment method to hides                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .
   const hidePaymentMethod = input.paymentMethods.find(
-    (method) => method.name.includes("代金引換") || method.name.includes("cod")
+    (method) => method.name.includes("代金引換") || method.name.includes("COD")
   );
 
   const amazonPayMethod = input.paymentMethods.find((method) =>
@@ -93,22 +102,14 @@ export function run(input) {
   );
 
   const operations = [];
-  // if (amazonPayMethod) {
-  //   operations.push({
-  //     hide: {
-  //       paymentMethodId: amazonPayMethod.id,
-  //     },
-  //   });
-  // }
-
-  // Add COD to operations if the conditions are met and it exists
   if (
     hidePaymentMethod &&
     (isGiftPurchase ||
       containsCustomSKU ||
       containsPreorder ||
       containsPersonalize ||
-      containsGiftcard)
+      containsGiftcard ||
+      isExeededSubtotal)
   ) {
     operations.push({
       hide: {
